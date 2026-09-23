@@ -1,5 +1,7 @@
 # Skills
 
+[![skills.sh](https://skills.sh/b/anant-c/skills)](https://skills.sh/anant-c/skills)
+
 Agent skills I use for real work, tested on real machines. Free and MIT-licensed.
 
 Each skill is a folder of instructions that an AI coding agent (Claude Code,
@@ -7,6 +9,8 @@ Cursor, Codex and others) follows to do one job well: the steps, the traps, and
 the checks that prove it worked.
 
 ## Install
+
+Browse them on **[skills.sh](https://skills.sh/anant-c/skills)**, or install directly:
 
 ```bash
 npx skills add anant-c/skills                        # pick from the list
@@ -19,7 +23,7 @@ Or copy a folder from `skills/` into `~/.claude/skills/`.
 
 | Skill | What it does |
 |---|---|
-| [vps-hardening](skills/vps-hardening) | Turns a fresh Ubuntu VPS into a production-capable host with **no open ports except SSH**: Cloudflare Tunnel, Traefik, a read-only Docker socket proxy, Postgres/Redis on an internal network, tested backups and a 19-point health check. Every step is verified by trying to break it. |
+| [vps-hardening](https://skills.sh/anant-c/skills/vps-hardening) ([source](skills/vps-hardening)) | Turns a fresh Ubuntu VPS into a production-capable host with **no open ports except SSH**: Cloudflare Tunnel, Traefik, a read-only Docker socket proxy, Postgres/Redis on an internal network, tested backups and a 19-point health check. Every step is verified by trying to break it. |
 
 ## How these are built
 
