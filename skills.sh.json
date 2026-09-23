@@ -1,0 +1,11 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Infrastructure",
+      "description": "Servers, networking and deployment, set up safely and verified.",
+      "skills": ["vps-hardening"]
+    }
+  ]
+}
