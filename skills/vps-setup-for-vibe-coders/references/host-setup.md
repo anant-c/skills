@@ -98,6 +98,35 @@ ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no <user>@<host
 ssh -f -N -L 9999:localhost:22 <alias> && nc -z localhost 9999 && echo FORWARD_OK
 ```
 
+## 3b. Swap
+
+Provider images usually ship with **no swap**. Without it, one memory spike (a
+build, a leaking Node process) makes the box thrash until nothing answers, SSH
+included, while the tunnel keeps reporting the site as up (traps 19). With swap,
+the same spike is a slowdown you can see and fix. Use 2 GB; on a 1–2 GB box it is
+not optional.
+
+```bash
+swapon --show                      # already have swap? skip this section
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile           # before mkswap: swap holds process memory, secrets included
+sudo mkswap /swapfile
+sudo swapon /swapfile
+grep -q '^/swapfile ' /etc/fstab || echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+# use swap as a last resort, not as a place to park running apps
+echo 'vm.swappiness=10' | sudo tee /etc/sysctl.d/99-swappiness.conf
+sudo sysctl -p /etc/sysctl.d/99-swappiness.conf
+```
+
+Some images already have a `/swapfile` line in `/etc/fstab` but no file behind it,
+so swap silently never comes up. The `grep` guard keeps that line instead of adding
+a duplicate; it works once the file exists.
+
+Verify: `swapon --show` lists `/swapfile` at 2G, `sysctl vm.swappiness` is 10, and
+`sudo findmnt --verify` reports **0 errors**. Its warning that the swap source is
+"a regular file" is expected. The reboot at the end of the next section proves
+it persists.
+
 ## 4. Firewall
 
 Allow SSH **before** enabling, or the enable cuts your session.
@@ -114,14 +143,15 @@ sudo ufw status verbose
 Verify from outside, from the laptop: `nc -z -w5 <ip> 8080` must fail. Then tell
 the user, in one or two sentences, that **Docker bypasses UFW** (traps 1).
 
-Now reboot if a kernel update is pending, and confirm that SSH hardening, UFW and
-the new kernel all came back:
+Now reboot, and confirm that SSH hardening, UFW, swap and any new kernel all
+came back:
 
 ```bash
 sudo systemctl reboot
 # then, from a new connection:
 uname -r; [ -f /var/run/reboot-required ] && echo STILL_PENDING
 sudo ufw status | head -1; sudo sshd -T | grep -E '^(passwordauthentication|permitrootlogin) '
+swapon --show; sysctl vm.swappiness
 ```
 
 ## 5. Docker

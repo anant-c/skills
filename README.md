@@ -25,7 +25,7 @@ Skills for shipping what you build with AI, safely, without first becoming a Dev
 
 | Skill | What it does |
 |---|---|
-| [vps-setup-for-vibe-coders](https://skills.sh/anant-c/skills/vps-setup-for-vibe-coders) ([source](skills/vps-setup-for-vibe-coders)) | Turns a fresh Ubuntu VPS into a production-capable host with **no open ports except SSH**: Cloudflare Tunnel, Traefik, a read-only Docker socket proxy, Postgres/Redis on an internal network, tested backups and a 19-point health check. Every step is verified by trying to break it. |
+| [vps-setup-for-vibe-coders](https://skills.sh/anant-c/skills/vps-setup-for-vibe-coders) ([source](skills/vps-setup-for-vibe-coders)) | Turns a fresh Ubuntu VPS into a production-capable host with **no open ports except SSH**: Cloudflare Tunnel, Traefik, a read-only Docker socket proxy, Postgres/Redis on an internal network, swap and per-container memory limits, tested backups and a 21-point health check. Every step is verified by trying to break it. |
 
 ## How these are built
 

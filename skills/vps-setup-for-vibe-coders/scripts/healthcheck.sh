@@ -44,6 +44,16 @@ DISK=$(df --output=pcent / | tail -1 | tr -dc '0-9')
 [ "$DISK" -lt 80 ] && ok "disk ${DISK}%" || { [ "$DISK" -lt 90 ] && warn "disk ${DISK}%" || bad "disk ${DISK}%"; }
 MEM=$(free -m | awk '/^Mem:/{printf "%d", $7*100/$2}')
 [ "$MEM" -gt 15 ] && ok "memory ${MEM}% available" || warn "only ${MEM}% memory available"
+# No swap: a memory spike hangs the box, SSH included, instead of slowing it (traps 19).
+SWAP=$(free -m | awk '/^Swap:/{print $2}')
+if [ "$SWAP" -eq 0 ]; then warn "no swap — a memory spike will hang the box (traps 19)"
+else
+  SWAPUSED=$(free -m | awk '/^Swap:/{printf "%d", $3*100/$2}')
+  [ "$SWAPUSED" -lt 50 ] && ok "swap ${SWAP}MB, ${SWAPUSED}% used" \
+    || warn "swap ${SWAPUSED}% used — an app needs a higher mem_limit or is leaking"
+fi
+NOLIMIT=$(docker ps -q | xargs -r docker inspect --format '{{if eq .HostConfig.Memory 0}}{{.Name}}{{end}}' | sed 's#^/##' | grep . | tr '\n' ' ')
+[ -z "$NOLIMIT" ] && ok "every container has a memory limit" || warn "no memory limit: $NOLIMIT"
 
 hdr "Host security posture"
 LISTEN=$(sudo -n ss -tulpn 2>/dev/null | grep LISTEN | grep -vcE '127\.0\.0\.|\[::1\]')

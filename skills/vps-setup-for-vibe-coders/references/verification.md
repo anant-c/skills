@@ -13,6 +13,8 @@ ss -tulpn | grep LISTEN          # every 0.0.0.0 line is a promise to the intern
 sudo ufw status verbose          # expect: deny (incoming), deny (routed)
 sudo sshd -T | grep -iE '^(permitrootlogin|passwordauthentication|port|allowtcpforwarding)'
 uname -r; [ -f /var/run/reboot-required ] && echo "REBOOT PENDING"
+swapon --show; sysctl vm.swappiness  # expect: /swapfile 2G, swappiness 10
+docker ps -q | xargs -r docker inspect --format '{{.Name}} {{.HostConfig.Memory}}'  # 0 = no memory limit
 ```
 
 Expected public listeners at the end of the build: **SSH only** (plus

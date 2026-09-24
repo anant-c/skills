@@ -104,11 +104,15 @@ The `10-` matters: sshd uses the first value it reads, and cloud-init's
 `AllowTcpForwarding yes`, because later phases reach the admin UI through an SSH
 tunnel.
 
+**2b. Swap.** Add a 2 GB swap file with `vm.swappiness=10` if the box has none
+(most provider images don't). Without swap, a memory spike hangs the whole box,
+SSH included, instead of slowing it down (traps 19). On a 1–2 GB box this is
+essential.
+
 **3. Firewall.** Install `ufw` if missing. Default deny incoming, allow outgoing,
 allow 22/tcp *before* enabling. **Then tell them Docker bypasses UFW**: this
 surprises nearly everyone and changes how they must think about published ports.
-If the upgrade installed a kernel, reboot now and confirm SSH, UFW and the kernel
-came back.
+Then reboot and confirm SSH, UFW, swap and any new kernel came back.
 
 **4. Docker.** Install from Docker's repo (check it supports the release), set
 `daemon.json` (`live-restore`, `local` log driver). Explain that being in the
@@ -144,7 +148,9 @@ on a separate network, and bind it to `127.0.0.1` only, reached via
 `ssh -L 9000:localhost:9000 <host>`.
 
 **9. Application stack.** Public service on `proxy`, database and cache on
-`backend`. Use `references/compose-templates.md`. No `ports:` anywhere.
+`backend`. Use `references/compose-templates.md`. No `ports:` anywhere. Every
+service gets a `mem_limit`, so a runaway app is killed and restarted on its own
+instead of starving every other app on the box.
 
 **10. Database least privilege.** The `POSTGRES_USER` is a superuser — never give
 it to the application. Create a role that can read and write rows but not alter

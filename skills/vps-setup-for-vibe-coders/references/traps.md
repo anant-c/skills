@@ -291,6 +291,24 @@ Two false results from one real run:
 Never truncate the output of a security check, and run each check from the
 position the real client or attacker would be in.
 
+## 19. No swap: one memory spike hangs the whole box
+
+Most provider images ship with no swap. When memory runs out, Linux does not
+crash cleanly: it thrashes, evicting and re-reading the same pages, until
+nothing answers. SSH times out, so you cannot log in to fix it, and the tunnel
+keeps telling Cloudflare the origin exists, so nothing looks down from outside.
+On a 1–2 GB box a single `npm run build` or an image-heavy request is enough.
+
+Two fixes, and you want both:
+
+- **Swap** (host-setup 3b) turns the hang into a slowdown you can see and fix.
+- **A `mem_limit` on every container** means the one that misbehaves is killed
+  and restarted by Docker, instead of taking every other subdomain down with it.
+
+The health check warns when swap is missing, when more than half of it is in
+use (an app needs a higher limit or is leaking), and when any container runs
+without a memory limit.
+
 ## The meta-lesson
 
 Almost all of these fail **open** while **looking healthy**. Config that reads
