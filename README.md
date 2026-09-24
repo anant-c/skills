@@ -13,17 +13,19 @@ the checks that prove it worked.
 Browse them on **[skills.sh](https://skills.sh/anant-c/skills)**, or install directly:
 
 ```bash
-npx skills add anant-c/skills                        # pick from the list
-npx skills add anant-c/skills --skill vps-hardening  # just one
+npx skills add anant-c/skills                                    # pick from the list
+npx skills add anant-c/skills --skill vps-setup-for-vibe-coders  # just one
 ```
 
 Or copy a folder from `skills/` into `~/.claude/skills/`.
 
-## Skills
+## Vibe Coder Pack
+
+Skills for shipping what you build with AI, safely, without first becoming a DevOps engineer.
 
 | Skill | What it does |
 |---|---|
-| [vps-hardening](https://skills.sh/anant-c/skills/vps-hardening) ([source](skills/vps-hardening)) | Turns a fresh Ubuntu VPS into a production-capable host with **no open ports except SSH**: Cloudflare Tunnel, Traefik, a read-only Docker socket proxy, Postgres/Redis on an internal network, tested backups and a 19-point health check. Every step is verified by trying to break it. |
+| [vps-setup-for-vibe-coders](https://skills.sh/anant-c/skills/vps-setup-for-vibe-coders) ([source](skills/vps-setup-for-vibe-coders)) | Turns a fresh Ubuntu VPS into a production-capable host with **no open ports except SSH**: Cloudflare Tunnel, Traefik, a read-only Docker socket proxy, Postgres/Redis on an internal network, tested backups and a 19-point health check. Every step is verified by trying to break it. |
 
 ## How these are built
 

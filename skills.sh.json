@@ -3,9 +3,9 @@
   "notGrouped": "bottom",
   "groupings": [
     {
-      "title": "Infrastructure",
-      "description": "Servers, networking and deployment, set up safely and verified.",
-      "skills": ["vps-hardening"]
+      "title": "Vibe Coder Pack",
+      "description": "Ship what you build with AI, safely: servers, deploys and the checks that prove they are secure.",
+      "skills": ["vps-setup-for-vibe-coders"]
     }
   ]
 }

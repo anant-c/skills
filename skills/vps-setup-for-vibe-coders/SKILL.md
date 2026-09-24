@@ -1,9 +1,9 @@
 ---
-name: vps-hardening
-description: Harden a fresh Ubuntu VPS into a production-capable host - SSH, UFW, Docker, Docker socket proxy, Cloudflare Tunnel, Traefik, app stacks with PostgreSQL/Redis, least-privilege database roles, tested backups, and a health check. Use this whenever someone is setting up a VPS or cloud server, deploying Docker apps to a server, asking about Cloudflare Tunnel, Traefik, reverse proxies, exposing a service on a domain, securing a server, "getting this online", locking down SSH or a firewall, Portainer, or wondering whether their server setup is safe - even if they do not use the word "hardening". Also use it to audit or review an existing server setup.
+name: vps-setup-for-vibe-coders
+description: Set up a fresh Ubuntu VPS for shipping side projects and prototypes safely, part of the Vibe Coder Pack. Hardens it into a production-capable host - SSH, UFW, Docker, Docker socket proxy, Cloudflare Tunnel, Traefik, app stacks with PostgreSQL/Redis, least-privilege database roles, tested backups, and a health check. Use this whenever someone is setting up a VPS or cloud server, deploying Docker apps to a server, asking about Cloudflare Tunnel, Traefik, reverse proxies, exposing a service on a domain, securing a server, "getting this online", locking down SSH or a firewall, Portainer, or wondering whether their server setup is safe - even if they do not use the word "hardening". Also use it to audit or review an existing server setup.
 ---
 
-# VPS hardening
+# VPS setup for vibe coders
 
 Turn a fresh Ubuntu VPS into something you can run production software on, and
 prototype quickly against, without leaving an open door.
